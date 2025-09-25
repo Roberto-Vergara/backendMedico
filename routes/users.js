@@ -13,14 +13,27 @@ const clavejwt = "tuamammaammamamama";
 // de tablas en un modelo aparte, para asi cumplir con una buena jerarquia de carpetas
 router.post("/registro",async (req,res)=>{
     try {
-        const {email,password,nombre,apellido} = req.body;
-        const hashpass = await bcrypt.hash(password,10) //elegir el salt es privado
-        const resultado = await con.query(`INSERT INTO paciente(correo,password,nombre,apellido) 
-            VALUES(${email},${hashpass},${nombre},${apellido})`);//evitar hacerlo asi o aceptar injeccion sql
-
-        console.log(resultado);
+        console.log(req.body);
         
-        res.statusCode(201).json("se creo correctamente el usuario")
+        const {email,password,nombre} = req.body;
+        nom = nombre.split(" ")[0];
+        ape = nombre.split(" ")[1];
+        const hashpass = await bcrypt.hash(password,10) //elegir el salt es privado
+        // let apellido = "vergara"
+        // const resultado = await con.query(`INSERT INTO paciente(correo,password,nombre,apellido) 
+        //     VALUES(${email},${hashpass},${nombre},${apellido})`);//evitar hacerlo asi o aceptar injeccion sql
+        
+        con.query(
+            "INSERT INTO paciente (correo, password, nombre, apellido) VALUES (?, ?, ?, ?)",
+            [email, hashpass, nom, ape],
+            (err, resultado) => {
+            if (err) throw err;
+
+            console.log(resultado, "funciono ");
+            res.status(201).redirect("/");
+        });
+
+        
         
     } catch (error) {
         console.log("salio algo mal al crear la tabla curso");
@@ -45,7 +58,7 @@ router.post("/login",async (req,res)=>{
             }else{
                 const token = jwt.sign({email:email},clavejwt,{expiresIn:60*60},{algorithm:"HS256"})
                 res.setHeader(Authorization,`Bearer ${token}`)
-                res.statusCode(200).json("pasa correctamente")
+                res.statusCode(200).redirect("/")
             }
         });
     } catch (error) {

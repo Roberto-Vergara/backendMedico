@@ -1,0 +1,119 @@
+:root {
+    --primary: #2c6bed;
+    --secondary: #6c757d;
+    --success: #198754;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --light: #f8f9fa;
+    --dark: #212529;
+}
+
+body {
+    background-color: #f5f7fb;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: none;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    border-radius: 12px 12px 0 0 !important;
+    background-color: white;
+    border-bottom: 1px solid #eaeaea;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+.btn-primary:hover {
+    background-color: #1a56c7;
+}
+
+.symptom-input {
+    margin-bottom: 15px;
+}
+
+.urgency-critical {
+    background-color: #ffcccc;
+    padding: 10px;
+    border-radius: 8px;
+    border-left: 4px solid var(--danger);
+}
+
+.urgency-high {
+    background-color: #ffe6cc;
+    padding: 10px;
+    border-radius: 8px;
+    border-left: 4px solid var(--warning);
+}
+
+.urgency-medium {
+    background-color: #fff6cc;
+    padding: 10px;
+    border-radius: 8px;
+    border-left: 4px solid #e6e600;
+}
+
+.urgency-low {
+    background-color: #e6ffe6;
+    padding: 10px;
+    border-radius: 8px;
+    border-left: 4px solid var(--success);
+}
+
+.diagnosis-history {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.preview-image {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.github-link {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.github-link:hover {
+    background-color: #4078c0;
+    color: white;
+}
