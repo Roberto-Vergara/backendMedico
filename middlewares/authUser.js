@@ -2,36 +2,38 @@
 import jwt from "jsonwebtoken";
 import con from "../database.js"
 
-const verUser=async(req,res,err,next)=>{
+const clavejwt = process.env.CLAVEJWT;
+
+const verUser=async(req,res,next)=>{
 
     try {
         const getHead = req.get('Authorization');
-        if(!getHead){//undefined
+        console.log(getHead);
+        
+        if(getHead==""){//undefined
             throw "no tiene token"
         }
         let token = getHead.split(" ");
         token = token[1];
-        if(!token){
+        if(token==""){
             throw "no tiene token"
         }
-        const validar = jwt.verify(token,"tuamammaammamamama") //lanza solo un throw creo si sale mal
-        const user = await con.query("SELECT * FROM usuario WHERE email=?",[validar.email])
-        if(user==[""] || user.length==0){
-            throw "usuario no existente en la base de datos";
-        }else{
-            req.email = validar.email;
+        const validar = jwt.verify(token,clavejwt) //lanza solo un throw creo si sale mal
+        console.log(validar)
+        con.query("SELECT * FROM paciente WHERE correo=?",[validar.email],(err,resu)=>{
+            if(err) throw err;
+            if(resu==[]) throw err;
+            req.email = resu[0].correo;
             next();
-        }
+        })
 
 
     } catch (error) {
         console.log(error);
-        res.statusCode(301).json("acceso no permitido")
+        res.status(301).json("acceso no permitido")
     }
 }
 
 
-export {
-    verUser
-}
+export default verUser;
 

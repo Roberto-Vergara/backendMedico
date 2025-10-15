@@ -31,7 +31,7 @@ router.post("/subir",upload.single("img"),async(req,res)=>{
         )
         console.log(respuesta);
         
-        res.json("funciono");
+        res.json({tipo:respuesta.tipo,prediccion:respuesta.pred});
     } catch (error) {
         console.log(error);
         res.json("algo salio mal")

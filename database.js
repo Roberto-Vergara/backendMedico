@@ -1,10 +1,10 @@
 import mysql from "mysql2";
 
 const conexion = mysql.createConnection({
-    host:"localhost",
-    user:"root",
-    password:"",
-    database:"Medico"//creala en tu xampp, no lo hago aqui
+    host:process.env.DB_HOST,
+    user:process.env.DB_USER,
+    password:process.env.DB_PASSWORD,
+    database:process.env.DB_DATABASE//creala en tu xampp, no lo hago aqui
 })
 
 conexion.query(`CREATE TABLE IF NOT EXISTS paciente 

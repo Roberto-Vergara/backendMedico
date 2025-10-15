@@ -8,7 +8,9 @@ router.get("/inicio", (req, res) => {
 
 
 router.get("/home",(req,res)=>{
-    res.sendFile("home.html", { root: "front" });
+    console.log(req.email)
+    res.json("funciono")
+    // res.sendFile("home.html", { root: "front" });
 })
 
 
