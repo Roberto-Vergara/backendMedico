@@ -1,119 +1,293 @@
+/* Archivo: CSS/style.css */
+
+/* --- VARIABLES Y ESTILOS GLOBALES --- */
 :root {
-    --primary: #2c6bed;
-    --secondary: #6c757d;
-    --success: #198754;
-    --danger: #dc3545;
-    --warning: #ffc107;
-    --light: #f8f9fa;
-    --dark: #212529;
+    --color-primario: #3498db;
+    --color-secundario: #2ecc71;
+    --color-fondo: #f4f7f9;
+    --color-tarjeta: #ffffff;
+    --color-texto: #333333;
+    --color-sombra: rgba(0, 0, 0, 0.08);
+    --radio-borde: 12px;
 }
 
 body {
-    background-color: #f5f7fb;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.6;
+    margin: 0;
 }
 
-.navbar-brand {
+/* --- HEADER PRINCIPAL (PÁGINA DE INICIO) --- */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: white;
+    box-shadow: 0 2px 10px var(--color-sombra);
+}
+
+.logo {
+    font-size: 1.5em;
     font-weight: 700;
-    color: var(--primary);
+    color: var(--color-primario);
 }
 
-.card {
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: none;
+.main-nav a {
+    text-decoration: none;
+    margin-left: 15px;
+}
+
+.nav-btn {
+    font-family: 'Poppins', sans-serif;
+    border: 2px solid var(--color-primario);
+    background-color: transparent;
+    color: var(--color-primario);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-btn.register {
+    background-color: var(--color-primario);
+    color: white;
+}
+
+.nav-btn:hover {
+    background-color: var(--color-primario);
+    color: white;
+    transform: translateY(-2px);
+}
+
+
+/* --- SECCIÓN HERO (PORTADA) --- */
+.hero {
+    background: linear-gradient(rgba(52, 152, 219, 0.8), rgba(41, 128, 185, 0.9)), url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero-content h1 {
+    font-size: 3em;
     margin-bottom: 20px;
 }
 
-.card-header {
-    border-radius: 12px 12px 0 0 !important;
-    background-color: white;
-    border-bottom: 1px solid #eaeaea;
+.hero-content p {
+    font-size: 1.2em;
+    max-width: 700px;
+    margin: 0 auto 30px auto;
+}
+
+.cta-button {
+    background-color: var(--color-secundario);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1.2em;
     font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
 }
 
-.btn-primary {
-    background-color: var(--primary);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(46, 204, 113, 0.5);
 }
 
-.btn-primary:hover {
-    background-color: #1a56c7;
+/* --- SECCIÓN FEATURES (PORTADA) --- */
+.features {
+    padding: 60px 20px;
+    text-align: center;
 }
 
-.symptom-input {
-    margin-bottom: 15px;
+.features h2 {
+    font-size: 2.5em;
+    margin-bottom: 40px;
 }
 
-.urgency-critical {
-    background-color: #ffcccc;
-    padding: 10px;
-    border-radius: 8px;
-    border-left: 4px solid var(--danger);
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.urgency-high {
-    background-color: #ffe6cc;
-    padding: 10px;
-    border-radius: 8px;
-    border-left: 4px solid var(--warning);
+.feature-item {
+    background-color: white;
+    padding: 30px;
+    border-radius: var(--radio-borde);
+    box-shadow: 0 5px 20px var(--color-sombra);
 }
 
-.urgency-medium {
-    background-color: #fff6cc;
-    padding: 10px;
-    border-radius: 8px;
-    border-left: 4px solid #e6e600;
-}
-
-.urgency-low {
-    background-color: #e6ffe6;
-    padding: 10px;
-    border-radius: 8px;
-    border-left: 4px solid var(--success);
-}
-
-.diagnosis-history {
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-.login-container {
-    max-width: 400px;
-    margin: 100px auto;
+/* --- PÁGINAS DE AUTENTICACIÓN (LOGIN, REGISTRO, ETC) --- */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     padding: 20px;
 }
 
-.hidden {
-    display: none;
+.auth-card {
+    background-color: white;
+    padding: 40px;
+    border-radius: var(--radio-borde);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 450px;
 }
 
-.preview-image {
-    max-width: 100%;
-    max-height: 200px;
-    border-radius: 8px;
+.auth-card h2 {
+    text-align: center;
+    color: var(--color-primario);
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.auth-links a {
+    display: block;
+    color: var(--color-primario);
+    text-decoration: none;
     margin-top: 10px;
 }
 
-.github-link {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #333;
+/* --- ESTILOS GENERALES PARA FORMULARIOS --- */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+input[type="text"], input[type="number"], input[type="email"], input[type="password"], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+.submit-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: var(--color-secundario);
     color: white;
-    padding: 10px 15px;
-    border-radius: 50px;
-    text-decoration: none;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.submit-btn:hover {
+    background-color: #27ae60;
 }
 
-.github-link:hover {
-    background-color: #4078c0;
-    color: white;
+/* --- ESTILOS PARA LA PÁGINA DE ANÁLISIS --- */
+.page-header {
+    text-align: center;
+    padding: 20px;
+}
+.back-link {
+    color: var(--color-primario);
+    text-decoration: none;
+    font-weight: 600;
+}
+.prediction-card {
+    /* (Puedes reutilizar los estilos de .prediction-card que ya tenías) */
+    max-width: 800px;
+    margin: 0 auto 30px auto;
+    background-color: var(--color-tarjeta);
+    padding: 30px 40px;
+    border-radius: var(--radio-borde);
+    box-shadow: 0 10px 30px var(--color-sombra);
+}
+/* --- ESTILO PARA EL BOTÓN DE RETROCESO --- */
+
+.back-button {
+    position: absolute; /* Queda "flotando" sobre la página */
+    top: 1.5x;          /* 30px desde arriba */
+    left: 1.5px;         /* 30px desde la izquierda */
+    
+    /* Diseño del círculo */
+    width: 45px;
+    height: 45px;
+    background-color: var(--color-tarjeta); /* Usa el blanco de tu tarjeta */
+    border-radius: 50%; /* Lo hace perfectamente redondo */
+    
+    /* Centrado del icono */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Estilos del icono y sombra */
+    color: var(--color-primario); /* Usa tu azul principal para la flecha */
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* Sombra suave para destacar */
+    
+    /* Animación */
+    transition: all 0.3s ease;
+}
+
+/* El SVG (icono) dentro del botón */
+.back-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Efecto al pasar el mouse */
+.back-button:hover {
+    transform: scale(1.1); /* Lo agranda un poco */
+    background-color: var(--color-primario); /* Cambia el fondo a azul */
+    color: var(--color-tarjeta); /* Cambia la flecha a blanco */
+}
+/* --- ESTILOS PARA FORMULARIOS DESPLEGABLES --- */
+
+.prediction-card.collapsible .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer; /* Cambia el cursor a una manito */
+}
+
+/* El ícono (+) */
+.collapse-icon {
+    font-size: 2em; /* Tamaño grande */
+    font-weight: 300; /* Delgado */
+    color: var(--color-primario);
+    transition: transform 0.3s ease; /* Animación de rotación */
+}
+
+/* El cuerpo del formulario (oculto por defecto) */
+.card-body {
+    max-height: 0; /* Oculto por defecto */
+    overflow: hidden; /* Oculta el contenido que se desborda */
+    padding: 0 10px; /* Quitamos padding vertical */
+    transition: max-height 0.5s ease-out, padding 0.3s ease; /* Animación suave */
+}
+
+/* Clase "active" que añade JavaScript */
+.card-body.active {
+    max-height: 1500px; /* Un valor alto para permitir que se muestre todo */
+    padding: 30px 10px; /* Devuelve el padding vertical */
+    transition: max-height 0.5s ease-in, padding 0.3s ease;
+}
+
+/* Gira el ícono cuando está activo */
+.card-body.active + .card-header .collapse-icon, /* Para CSS que no soporta :has() */
+.card-header:has(+ .card-body.active) .collapse-icon { /* La forma moderna */
+    transform: rotate(45deg); /* Gira el "+" para que parezca una "x" */
 }

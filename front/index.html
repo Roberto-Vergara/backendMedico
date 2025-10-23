@@ -3,258 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MedDiagnosis - Sistema de Diagnóstico Médico</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Nuestros estilos -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/auth.css">
+    <title>Bienvenido a analisis de sintomas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-stethoscope me-2"></i>MedDiagnosis
-            </a>
-            <div class="d-flex">
-                <span class="navbar-text me-3" id="userEmailNav">usuario@ejemplo.com</span>
-                <button class="btn btn-outline-secondary btn-sm" id="logoutBtn">Cerrar Sesión</button>
+    <header class="main-header">
+        <div class="logo">Diagnostico Asistido</div>
+        <nav class="main-nav">
+            <a href="login.html" class="nav-btn">Iniciar Sesión</a>
+            <a href="registro.html" class="nav-btn register">Registrarse</a>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Una nueva manera de enteder tu Salud</h1>
+                <p>Utiliza nuestra plataforma para analizar tus síntomas y obtener posibles diagnósticos de manera rápida y confiable.</p>
+                <a href="analisis.html" class="cta-button">Comenzar Analisis Ahora</a>
             </div>
-        </div>
-    </nav>
+        </section>
 
-    <!-- Contenido Principal -->
-    <div class="container py-4">
-        <div class="row">
-            <!-- Panel de Diagnóstico -->
-            <div class="col-lg-8">
-                <div class="card">
-                    <div class="card-header bg-white">
-                        <h5 class="mb-0"><i class="fas fa-diagnosis me-2"></i>Nuevo Diagnóstico</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="alert alert-info">
-                            <i class="fas fa-info-circle me-2"></i>Complete la información de síntomas o suba una imagen de la lesión.
-                        </div>
-                        
-                        <div class="mb-4">
-                            <h6>Síntomas</h6>
-                            <div id="symptomsContainer">
-                                <div class="row symptom-input">
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control symptom-name" placeholder="Nombre del síntoma">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <select class="form-select symptom-severity">
-                                            <option value="1">Leve</option>
-                                            <option value="2" selected>Moderado</option>
-                                            <option value="3">Severo</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="input-group">
-                                            <input type="number" class="form-control symptom-duration" placeholder="Días" value="1" min="1">
-                                            <span class="input-group-text">días</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn btn-sm btn-outline-primary mt-2" id="addSymptomBtn">
-                                <i class="fas fa-plus me-1"></i>Añadir otro síntoma
-                            </button>
-                        </div>
-                        
-                        <div class="mb-4">
-                            <h6>Imagen de la lesión (opcional)</h6>
-                            <div class="border rounded p-3 text-center">
-                                <input type="file" id="imageUpload" accept="image/*" class="d-none">
-                                <div id="imagePlaceholder">
-                                    <i class="fas fa-cloud-upload-alt display-4 text-secondary mb-3"></i>
-                                    <p class="text-secondary">Haga clic para seleccionar una imagen</p>
-                                </div>
-                                <img src="" class="preview-image hidden" id="imagePreview">
-                            </div>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="ageInput" class="form-label">Edad del paciente</label>
-                            <input type="number" class="form-control" id="ageInput" min="1" max="120" value="35">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="conditionsInput" class="form-label">Condiciones médicas existentes (separadas por coma)</label>
-                            <input type="text" class="form-control" id="conditionsInput" placeholder="Ej: diabetes, hipertensión">
-                        </div>
-                        
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" id="urgentCheck">
-                            <label class="form-check-label" for="urgentCheck">
-                                Considerar este caso como urgente
-                            </label>
-                        </div>
-                        
-                        <button class="btn btn-primary w-100 py-2" id="diagnoseBtn">
-                            <i class="fas fa-search me-2"></i>Realizar Diagnóstico
-                        </button>
-                    </div>
+        <section class="features">
+            <h2>¿Como te podemos ayudar?</h2>
+            <div class="features-grid">
+                <div class="features-item">
+                    <h3>Analisis de Lesiones Cutáneas</h3>
+                    <p>Sube imágenes de tus lesiones cutáneas y recibe un análisis detallado para identificar posibles condiciones dermatológicas.</p>
                 </div>
-                
-                <!-- Resultados del Diagnóstico -->
-                <div class="card hidden" id="resultCard">
-                    <div class="card-header bg-white">
-                        <h5 class="mb-0"><i class="fas fa-file-medical me-2"></i>Resultados del Diagnóstico</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="alert hidden" id="urgencyAlert">
-                            <i class="fas fa-exclamation-triangle me-2"></i><span id="urgencyText"></span>
-                        </div>
-                        
-                        <h6>Diagnóstico:</h6>
-                        <p id="diagnosisText" class="mb-3">Cargando...</p>
-                        
-                        <h6>Recomendaciones:</h6>
-                        <p id="recommendationsText" class="mb-3">Cargando...</p>
-                        
-                        <h6>Pronóstico de evolución:</h6>
-                        <ul id="prognosisList" class="mb-3">
-                            <li>Cargando...</li>
-                        </ul>
-                        
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-outline-secondary me-2" id="saveDiagnosisBtn">
-                                <i class="fas fa-save me-1"></i>Guardar Diagnóstico
-                            </button>
-                            <button class="btn btn-primary" id="newDiagnosisBtn">
-                                <i class="fas fa-plus me-1"></i>Nuevo Diagnóstico
-                            </button>
-                        </div>
-                    </div>
+                <div class="features-item">
+                    <h3>Orientacion por Sintomas</h3>
+                    <p>Selecciona tus sintomas y te orientaremos sobre las posibles causas y el tipo de medico que deberias consultar.</p>
+                </div>
+                <div class="features-item">
+                    <h3>Disclaimer</h3>
+                    <p>Nuestra plataforma no reemplaza la consulta médica profesional. Siempre busca la opinión de un médico para un diagnóstico preciso.</p>
                 </div>
             </div>
-            
-            <!-- Panel Lateral -->
-            <div class="col-lg-4">
-                <!-- Historial de Diagnósticos -->
-                <div class="card">
-                    <div class="card-header bg-white">
-                        <h5 class="mb-0"><i class="fas fa-history me-2"></i>Historial de Diagnósticos</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="diagnosis-history" id="diagnosisHistory">
-                            <p class="text-center text-muted">No hay diagnósticos previos</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Información de Urgencias -->
-                <div class="card">
-                    <div class="card-header bg-white">
-                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Niveles de Urgencia</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="urgency-critical mb-2">
-                            <strong>Crítica:</strong> Busque atención médica inmediata
-                        </div>
-                        <div class="urgency-high mb-2">
-                            <strong>Alta:</strong> Consulte a un médico dentro de 24 horas
-                        </div>
-                        <div class="urgency-medium mb-2">
-                            <strong>Media:</strong> Consulte a un médico en 2-3 días
-                        </div>
-                        <div class="urgency-low">
-                            <strong>Baja:</strong> Autocuidado y monitorización
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Login -->
-    <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <form  class="modal-content" action="http://localhost:3000/auth/login" method="post">
-                <div class="modal-header">
-                    <h5 class="modal-title">Iniciar Sesión</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="emailInput" class="form-label">Correo electrónico</label>
-                        <input name="email" type="email" class="form-control" id="emailInput" placeholder="nombre@ejemplo.com">
-                    </div>
-                    <div class="mb-3">
-                        <label for="passwordInput" class="form-label">Contraseña</label>
-                        <input name="password" type="password" class="form-control" id="passwordInput" placeholder="Contraseña">
-                    </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="rememberCheck">
-                        <label class="form-check-label" for="rememberCheck">Recordarme</label>
-                    </div>
-                    <div class="text-center">
-                        <p>¿No tiene una cuenta? <a href="#" id="showRegister">Registrarse</a></p>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary w-100" id="loginBtn">Iniciar Sesión</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal de Registro -->
-    <div class="modal fade" id="registerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <form class="modal-content" action="http://localhost:3000/auth/registro" method="post">
-                <div class="modal-header">
-                    <h5 class="modal-title">Crear Cuenta</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="registerName" class="form-label">Nombre completo</label>
-                        <input name="nombre" type="text" class="form-control" id="registerName" placeholder="Juan Pérez">
-                    </div>
-                    <div class="mb-3">
-                        <label for="registerEmail" class="form-label">Correo electrónico</label>
-                        <input name="email" type="email" class="form-control" id="registerEmail" placeholder="nombre@ejemplo.com">
-                    </div>
-                    <div class="mb-3">
-                        <label for="registerPassword" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="registerPassword" placeholder="Mínimo 6 caracteres">
-                    </div>
-                    <div class="mb-3">
-                        <label for="registerConfirmPassword" class="form-label">Confirmar contraseña</label>
-                        <input name="password" type="password" class="form-control" id="registerConfirmPassword" placeholder="Repita su contraseña">
-                    </div>
-                    <div class="text-center">
-                        <p>¿Ya tiene una cuenta? <a href="#" id="showLogin">Iniciar Sesión</a></p>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary w-100" id="registerBtn">Registrarse</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Enlace a GitHub -->
-    <a href="https://github.com" class="github-link" target="_blank">
-        <i class="fab fa-github"></i> Subir a GitHub
-    </a>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Nuestros scripts -->
-    <script src="js/storage.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/diagnosis.js"></script>
-    <script src="js/ui.js"></script>
-    <script src="js/app.js"></script>
+        </section>
+    </main>
 </body>
 </html>

@@ -6,12 +6,27 @@ router.get("/inicio", (req, res) => {
     res.sendFile("index.html", { root: "front" });
 });
 
+router.get("/login", (req, res) => {
 
-router.get("/home",(req,res)=>{
-    console.log(req.email)
-    res.json("funciono")
-    // res.sendFile("home.html", { root: "front" });
-})
+    res.sendFile("login.html", { root: "front" });
+});
+
+router.get("/registro", (req, res) => {
+
+    res.sendFile("registro.html", { root: "front" });
+});
+
+router.get("/recuperar", (req, res) => {
+
+    res.sendFile("recuperar.html", { root: "front" });
+});
+
+router.get("/analisis", (req, res) => {
+
+    res.sendFile("analisis.html", { root: "front" });
+});
+
+
 
 
 

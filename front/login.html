@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Plataforma Beta</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+    <div class="auth-container">
+        
+        <div class="auth-card">
+            <a href="index.html" class="simple-back-button">&larr; Volver al Inicio</a>
+            <h2>Iniciar Sesión (Beta)</h2>
+            <form id="login-form" method="post" action="http://localhost:3000/auth/login">
+                <label for="login-email">Correo Electrónico:</label>
+                <input name="email" type="email" id="login-email" required>
+                
+                <label for="login-password">Contraseña:</label>
+                <input name="password" type="password" id="login-password" required>
+                
+                <button type="submit" class="submit-btn">Ingresar</button>
+                
+                <div class="auth-links">
+                    <a href="#">¿Olvidaste tu contraseña?</a>
+                    <a href="#">¿No tienes cuenta? Regístrate</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('login-form');
+
+        loginForm.addEventListener('submit', async (event) => {
+            // Prevenimos que el formulario recargue la página
+            event.preventDefault();
+
+            // 1. Capturamos los datos del formulario
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            // ===================================================================
+            // ✨ ESPACIO LIBRE PARA LA CONEXIÓN CON EL BACKEND ✨
+            // ===================================================================
+            // Aquí es donde harás la llamada a tu API para autenticar.
+            console.log('Datos listos para enviar al backend:', { email, password });
+
+            /*
+            Ejemplo de cómo sería la llamada con fetch:
+            
+            try {
+                const response = await fetch('/api/tu-endpoint-de-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Si el login es exitoso, rediriges al usuario
+                    window.location.href = 'analisis.html'; // O a tu página principal
+                } else {
+                    // Si hay un error, muestras un mensaje
+                    alert(data.message || 'Error: Credenciales incorrectas.');
+                }
+            } catch (error) {
+                console.error('Error de conexión:', error);
+                alert('No se pudo conectar con el servidor.');
+            }
+            */
+            // ===================================================================
+        });
+    </script>
+
+</body>
+</html>

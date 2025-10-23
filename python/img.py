@@ -45,3 +45,14 @@ la = "Maligno" if pred_label == 1 else "Benigno"
 # Respuesta JSON
 print(json.dumps({"tipo": la, "pred": float(pred_prob)}))
 sys.stdout.flush()
+
+    # "age_approx": 45,
+    # "anatom_site_general": "posterior torso",
+    # "concomitant_biopsy": true,
+    # "diagnosis_1": "Malignant",
+    # "diagnosis_2": "Malignant melanocytic proliferations (Melanoma)",
+    # "diagnosis_3": "Melanoma, NOS",
+    # "diagnosis_confirm_type": "histopathology",
+    # "image_type": "dermoscopic",
+    # "melanocytic": true,
+    # "sex": "female"

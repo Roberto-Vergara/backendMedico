@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Realizar Análisis - Plataforma de Orientación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="CSS/style.css">
+<style>
+/* Popup */
+.popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #333;
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(-20px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.popup.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+.popup button {
+    background: none;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.symptoms-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 6px;
+}
+.symptom-item {
+    flex: 1 0 30%;
+}
+</style>
+</head>
+<body>
+<header class="page-header">
+    <a href="index.html" class="back-link">&larr;Volver al Inicio</a>
+    <h1>Formularios de Análisis</h1>
+</header>
+<main>
+    <!-- 1. Análisis cutánea -->
+    <div class="prediction-card collapsible"> 
+        <div class="card-header">
+            <h2>1. Análisis de Lesiones Cutáneas</h2>
+            <span class="collapse-icon">+</span> 
+        </div>
+        <div class="card-body">
+            <form id="skin-lesion-form" enctype="multipart/form-data">
+                <div class="form-section">
+                    <h3>Carga de Imagen</h3>
+                    <input type="file" id="image-upload" name="img" accept="image/*" required>
+                </div>
+                <div class="form-section">
+                    <h3>Datos del paciente</h3>
+                    <label>Edad: <input type="number" id="age" name="age_approx" placeholder="Años" required></label>
+                    <label>Género: 
+                        <select id="gender" name="sex" required>
+                            <option value="">Seleccione...</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="femenino">Femenino</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </label>
+                    <label>Localización de la lesión:
+                        <select id="location" name="anatom_site_general" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="1">Cabeza</option>
+                            <option value="0">Otra parte del cuerpo</option>
+                        </select>
+                    </label>
+                    <label>Característica principal:
+                        <select id="lesion_type" name="melanocytic" required>
+                            <option value="">Seleccionar...</option>
+                            <option value="nevus_melanocitico">Lunar</option>
+                            <option value="queratosis">Queratosis</option>
+                            <option value="carcinoma">Carcinoma</option>
+                            <option value="otro">Otro / No sé</option>
+                        </select>
+                    </label>
+                </div>
+                <button type="submit" class="submit-btn analisis">Analizar Lesión</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. Síntomas generales -->
+    <div class="prediction-card collapsible">
+        <div class="card-header">
+            <h2>2. Orientación por Síntomas Generales</h2>
+            <span class="collapse-icon">+</span>
+        </div>
+        <div class="card-body">
+            <form id="general-symptoms-form">
+                <div class="form-section">
+                    <h3>Seleccione hasta 3 síntomas</h3>
+                    <div id="symptoms-container" class="symptoms-grid"></div>
+                </div>
+                <br>
+                <button type="submit" class="submit-btn">Obtener Orientación</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<div id="popup" class="popup">
+    <span id="popup-text"></span>
+    <button onclick="closePopup()">Cerrar</button>
+</div>
+
+<script>
+// Colapsables
+document.querySelectorAll('.card-header').forEach(header=>{
+    header.addEventListener('click', ()=>{
+        const body = header.nextElementSibling;
+        body.classList.toggle('active');
+        const icon = header.querySelector('.collapse-icon');
+        icon.textContent = body.classList.contains('active') ? '−' : '+';
+    });
+});
+
+// Popup
+function showPopup(msg){
+    const popup = document.getElementById("popup");
+    document.getElementById("popup-text").textContent = msg;
+    popup.classList.add("show");
+}
+function closePopup(){
+    document.getElementById("popup").classList.remove("show");
+}
+
+// Formulario cutánea
+document.getElementById("skin-lesion-form").addEventListener("submit", async e=>{
+    e.preventDefault();
+    const file = document.getElementById("image-upload").files[0];
+    if(!file) return showPopup("Selecciona una imagen");
+    const formData = new FormData();
+    formData.append("img", file);
+    formData.append("age_approx", document.getElementById("age").value);
+    formData.append("sex", document.getElementById("gender").value);
+    formData.append("anatom_site_general", document.getElementById("location").value);
+    formData.append("melanocytic", document.getElementById("lesion_type").value);
+    showPopup("Cargando...");
+    try{
+        const response = await fetch("http://localhost:3000/python/analizarCutanea",{method:"POST",body:formData});
+        if(!response.ok) throw new Error("Error al enviar la imagen");
+        const data = await response.json();
+        showPopup(`Predicción: ${data.tipo} (${(data.pred*100).toFixed(2)}%)`);
+    }catch(err){console.error(err); showPopup("Error al enviar la imagen");}
+});
+
+// Síntomas dinámicos
+const sintomasES = {
+    'abdominal_pain':'Dolor abdominal','acidity':'Acidez','altered_sensorium':'Alteración del sensorio','anxiety':'Ansiedad',
+    'back_pain':'Dolor de espalda','bladder_discomfort':'Molestia en la vejiga','bloody_stool':'Heces con sangre',
+    'blurred_and_distorted_vision':'Visión borrosa','breathlessness':'Falta de aire','burning_micturition':'Dolor al orinar',
+    'chest_pain':'Dolor en el pecho','chills':'Escalofríos','cold_hands_and_feets':'Manos y pies fríos',
+    'constipation':'Estreñimiento','continuous_feel_of_urine':'Sensación continua de orinar','continuous_sneezing':'Estornudos continuos',
+    'cough':'Tos','dark_urine':'Orina oscura','dehydration':'Deshidratación','diarrhoea':'Diarrea','dizziness':'Mareos',
+    'extra_marital_contacts':'Contactos extramaritales','fatigue':'Fatiga','foul_smell_of urine':'Olor desagradable de la orina',
+    'headache':'Dolor de cabeza','high_fever':'Fiebre alta','hip_joint_pain':'Dolor cadera','indigestion':'Indigestión',
+    'joint_pain':'Dolor en articulaciones','knee_pain':'Dolor de rodilla','lethargy':'Letargo','loss_of_appetite':'Pérdida de apetito',
+    'loss_of_balance':'Pérdida de equilibrio','mood_swings':'Cambios de ánimo','movement_stiffness':'Rigidez de movimientos',
+    'muscle_wasting':'Desgaste muscular','muscle_weakness':'Debilidad muscular','nausea':'Náuseas','neck_pain':'Dolor de cuello',
+    'pain_during_bowel_movements':'Dolor al defecar','pain_in_anal_region':'Dolor zona anal','patches_in_throat':'Manchas en garganta',
+    'restlessness':'Inquietud','silver_like_dusting':'Polvo plateado en piel','skin_peeling':'Descamación piel','skin_rash':'Erupción cutánea',
+    'spinning_movements':'Sensación de giro','stiff_neck':'Rigidez de cuello','stomach_pain':'Dolor de estómago','sunken_eyes':'Ojos hundidos',
+    'sweating':'Sudoración','swelling_joints':'Inflamación articulaciones','swelling_of_stomach':'Inflamación estómago','ulcers_on_tongue':'Úlceras en lengua',
+    'vomiting':'Vómitos','weakness_in_limbs':'Debilidad extremidades','weakness_of_one_body_side':'Debilidad de un lado del cuerpo',
+    'weight_gain':'Aumento de peso','weight_loss':'Pérdida de peso','yellowish_skin':'Piel amarillenta','itching':'Picazón'
+};
+const container = document.getElementById("symptoms-container");
+Object.keys(sintomasES).forEach(key=>{
+    const div=document.createElement("div");
+    div.className="symptom-item";
+    const input=document.createElement("input");
+    input.type="checkbox"; input.name="symptoms"; input.value=key; input.id=key;
+    const label=document.createElement("label");
+    label.htmlFor=key; label.textContent=sintomasES[key];
+    div.appendChild(input); div.appendChild(label);
+    container.appendChild(div);
+});
+
+// Limitar selección a 3 síntomas
+container.addEventListener("change", e=>{
+    const checked = container.querySelectorAll("input[type=checkbox]:checked");
+    if(checked.length>3){ e.target.checked=false; showPopup("Solo puedes seleccionar hasta 3 síntomas."); }
+});
+
+// Enviar síntomas
+document.getElementById("general-symptoms-form").addEventListener("submit", async e=>{
+    e.preventDefault();
+    const checked=Array.from(container.querySelectorAll("input[type=checkbox]:checked")).map(cb=>cb.value);
+    if(checked.length===0) return showPopup("Selecciona al menos un síntoma.");
+    try{
+        const response=await fetch("http://localhost:3000/python/preGeneral",{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({symptoms:checked})
+        });
+        const data=await response.json();
+        if(data.prediction) showPopup(`Predicción: ${data.prediction}`);
+        else showPopup("No se pudo obtener la predicción.");
+    }catch(err){console.error(err); showPopup("Error al enviar los síntomas.");}
+});
+</script>
+</body>
+</html>
