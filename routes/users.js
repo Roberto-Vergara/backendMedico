@@ -29,7 +29,7 @@ router.post("/registro",async (req,res)=>{
 
             console.log(resultado, "funciono ");
             // res.json("funciono")
-            res.status(201).redirect("/home");
+            res.status(201).redirect("/login");
         });
 
         
@@ -42,6 +42,7 @@ router.post("/registro",async (req,res)=>{
 })
 
 router.post("/login",async (req,res)=>{
+    
     // hay que hacer sessions o jwt
     //desencriptar las contraseñas hasheadas
     try {
@@ -54,11 +55,15 @@ router.post("/login",async (req,res)=>{
             const vaPass = bcrypt.compare(password,usuario.password)
             if(!vaPass){
                 res.status(300).json("usuario o contraseña incorrecta")
+                // console.log("usuario incorrecto");
+                
             }else{
+                // console.log("usuario correcto");
+                
                 const token = jwt.sign({email:email},clavejwt,{expiresIn:60*60},{algorithm:"HS256"})
-                res.setHeader("Authorization",`Bearer ${token}`)
-                res.json("funciono")
-                // res.status(200).redirect("/")
+                // res.setHeader("Authorization",`Bearer ${token}`)
+                // req.session.token = token;
+                res.redirect(`/analisis?token=${token}`)
             }
         });
     } catch (error) {

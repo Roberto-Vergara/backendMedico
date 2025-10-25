@@ -1,4 +1,6 @@
 import { Router } from "express";
+import auth from "../middlewares/authUser.js"
+
 const router = Router();
 
 router.get("/inicio", (req, res) => {
@@ -21,7 +23,7 @@ router.get("/recuperar", (req, res) => {
     res.sendFile("recuperar.html", { root: "front" });
 });
 
-router.get("/analisis", (req, res) => {
+router.get("/analisis",auth, (req, res) => {
 
     res.sendFile("analisis.html", { root: "front" });
 });
