@@ -20,7 +20,7 @@ router.get("/registro", (req, res) => {
 
 router.get("/recuperar", (req, res) => {
 
-    res.sendFile("recuperar.html", { root: "front" });
+    res.sendFile("login.html", { root: "front" });
 });
 
 router.get("/analisis",auth, (req, res) => {

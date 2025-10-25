@@ -291,3 +291,23 @@ input[type="text"], input[type="number"], input[type="email"], input[type="passw
 .card-header:has(+ .card-body.active) .collapse-icon { /* La forma moderna */
     transform: rotate(45deg); /* Gira el "+" para que parezca una "x" */
 }
+
+
+/* --- BACK LINK SIMPLE --- */
+.back-link {
+    display: inline-block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-primario);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background-color: #f0f8ff;
+    transition: all 0.25s ease;
+}
+
+.back-link:hover {
+    background-color: var(--color-secundario);
+    color: white;
+    transform: translateY(-2px);
+}
