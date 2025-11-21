@@ -361,7 +361,7 @@ document.getElementById("general-symptoms-form").addEventListener("submit",async
     const data=await response.json();
     if(!data.prediction){showPopup("No se pudo obtener la predicción.");return;}
     const rec=enfermedadRecomendacion(data.prediction);
-    showDetailedPopup(data.prediction,rec.descripcion,rec.recomendacion,rec.especialista);
+    showDetailedPopup(rec.nombre_es,rec.descripcion,rec.recomendacion,rec.especialista);
   }catch(err){console.error(err);showPopup("Error al enviar los síntomas.");}
 });
 </script>
